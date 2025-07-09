@@ -1,6 +1,9 @@
 services:
   samba-service:
-    build: .
+    build: 
+      context: .
+      args:
+        USERNAME: user
     volumes:
       - samba-config:/etc/samba
       # Define any shares as bind mounts here:
