@@ -1,0 +1,18 @@
+services:
+  samba-service:
+    build: .
+    volumes:
+      - samba-config:/etc/samba
+      # Define any shares as bind mounts here:
+    ports:
+      - 137-139:137-139
+      - 445:445
+    restart: unless-stopped
+
+volumes:
+  samba-config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /etc/samba
