@@ -18,4 +18,4 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /etc/samba
+      device: ./samba
