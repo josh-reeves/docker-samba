@@ -1,0 +1,1 @@
+This is a placeholder to ensure that the samba directory is added to the repository, which allows the compose.yaml file to be run as-is without any additional setup. Note that additional setup is still recommended.
