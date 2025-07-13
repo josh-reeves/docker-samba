@@ -1,13 +1,13 @@
-FROM alpine:latest
+FROM ubuntu:latest
 ARG USERS
-RUN apk update \
-	&& apk upgrade --no-cache
-RUN apk add --no-cache samba
-RUN apk add --no-cache openrc
-RUN rc-update add samba
-RUN rc-service samba start --ifinactive
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install samba -y
+RUN service smbd start && service nmbd start
+RUN apt install systemctl -y
+RUN systemctl enable smbd && systemctl enable nmbd
 RUN for USER in $USERS; \
-	do adduser -h /home/${USER} -D ${USER}; \
+	do useradd -m ${USER} --home /home/${USER}; \
 	done;
 RUN touch /var/log/samba/samba.log
 CMD truncate -s 0 /var/log/samba/samba.log && tail -F /var/log/samba/samba.log
