@@ -1,10 +1,13 @@
 FROM ubuntu:plucky
-ARG USERNAME=user
+ARG USERS
 RUN apt update -y
+RUN apt upgrade -y
 RUN apt install samba -y
-RUN useradd ${USERNAME} --home /home/${USERNAME}
+RUN service smbd start && service nmbd start
+RUN apt install systemctl -y
+RUN systemctl enable smbd && systemctl enable nmbd
+RUN for USER in $USERS; \
+	do useradd -m ${USER} --home /home/${USER}; \
+	done;
 RUN touch /var/log/samba/samba.log
-RUN chmod -R 777 /var/log/samba
-USER ${USERNAME}
-WORKDIR /home/${USERNAME}
 CMD truncate -s 0 /var/log/samba/samba.log && tail -F /var/log/samba/samba.log
