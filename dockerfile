@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 ARG USERS
+VOLUME /etc/samba
+EXPOSE 137-139/tcp 137-139/udp 445/tcp 445/udp
 RUN apt update -y
 RUN apt upgrade -y
 RUN for USER in $USERS; \
